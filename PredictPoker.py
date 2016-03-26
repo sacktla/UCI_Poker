@@ -87,3 +87,35 @@ for i in range(len(testingDF.index)):
 testingNpArray = testingDF.as_matrix(columns=None)
 print "Printing first 10 rows of Testing Numpy Array"
 print testingNpArray[0:10]
+
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import metrics
+from sklearn.svm import SVC
+
+classifier = SVC()
+
+print trainingNpArray.shape
+trainInput = trainingNpArray[:,0:10]
+trainOutput = trainingNpArray[:,10]
+
+print "training"
+classifier.fit(trainInput,trainOutput)
+
+
+testInput = testingNpArray[:,0:10]
+testOutput = testingNpArray[:,10]
+
+print "Predicting"
+predicted = classifier.predict(testInput)
+fpr,tpr,thresholds = metrics.roc_curve(testOutput,predicted,pos_label=3)#If you want to increase the pos label you need to increase the number of lines are read.
+
+auc = metrics.auc(fpr,tpr)
+
+print auc
+
+
+
+
+
+
